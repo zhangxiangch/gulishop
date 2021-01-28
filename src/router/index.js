@@ -7,6 +7,18 @@ import Login from '@/pages/Login'
 import Search from '@/pages/Search'
 import Register from '@/pages/Register'
 
+//修改添加PUSH的属性
+const originPush = VueRouter.prototype.push
+VueRouter.prototype.push= function(location,onResolved,onRejected){
+  if(onResolved ===undefined && onRejected ===undefined){
+    return originPush.call(this,location).catch(()=>{})
+  }else{
+    return originPush.call(this,location,onResolved,onRejected)
+  }
+}
+//修改replace的属性
+
+
 //需要向外暴露
 export default new VueRouter({
   routes:[
