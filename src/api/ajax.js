@@ -2,7 +2,8 @@
 import axios from 'axios'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-//二次封装
+import store from '@/store'
+//二次封装axios
 const service = axios.create({
   baseURL:'/api',
   timeout:20000,
@@ -12,7 +13,15 @@ const service = axios.create({
 // Add a request interceptor
 service.interceptors.request.use(
   (config)=>{
+    let userTempId= store.state.user.userTempId
+    if(userTempId){
+      config.headers.userTempId=userTempId
+    }
     NProgress.start()
+    let token = store.state.user.token
+    if(token){
+      config.headers.token = token 
+    }
     return config//config指的请求报文
   }
 );

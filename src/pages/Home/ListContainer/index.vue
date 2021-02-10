@@ -4,28 +4,7 @@
             <div class="sortList clearfix">
                 <div class="center">
                     <!--banner轮播-->
-                    <div class="swiper-container" id="mySwiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="./images/banner1.jpg" />
-                            </div>
-                            <!-- <div class="swiper-slide">
-                                <img src="./images/banner2.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/banner3.jpg" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="./images/banner4.jpg" />
-                            </div> -->
-                        </div>
-                        <!-- 如果需要分页器 -->
-                        <div class="swiper-pagination"></div>
-
-                        <!-- 如果需要导航按钮 -->
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    </div>
+                  <SlideLoop :bannerList='bannerList'></SlideLoop>
                 </div>
                 <div class="right">
                     <div class="news">
@@ -111,8 +90,36 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
   export default {
-    name:''
+    name:'',
+    mounted() {
+      this.$store.dispatch('getBannerList')
+      // setTimeout(() => {
+      //   new Swiper ('.swiper-container', {
+    
+      //       loop: true, // 循环模式选项
+            
+      //       // 如果需要分页器
+      //       pagination: {
+      //         el: '.swiper-pagination',
+      //       },
+            
+      //       // 如果需要前进后退按钮
+      //       navigation: {
+      //         nextEl: '.swiper-button-next',
+      //         prevEl: '.swiper-button-prev',
+      //       },
+      //       })        
+      //        }, 2000);
+            },
+    computed: {
+      ...mapState({
+        bannerList:state => state.home.bannerList
+      })
+    },
+   
   }
 </script>
 
@@ -187,7 +194,7 @@
                         width: 25%;
 
                         .list-item {
-                            background-image: url(./images/icons.png);
+                            background-image: url(~@/assets/icons.png);
                             width: 61px;
                             height: 40px;
                             display: block;

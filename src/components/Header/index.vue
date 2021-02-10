@@ -5,7 +5,12 @@
                 <div class="container">
                     <div class="loginList">
                         <p>尚品汇欢迎您！</p>
-                        <p>
+                        <p v-if="$store.state.user.userInfo.name">
+                            <span>欢迎您:</span>
+                            <a href="javascript:;">{{$store.state.user.userInfo.name}}</a>
+                            <a href="javascript:;" class="register" @click="logout">退出登录</a>
+                        </p>
+                        <p v-else>
                             <span>请</span>
                             <router-Link to="/login">登录</router-Link>
                             <router-link to="/register" class="register">免费注册</router-link>
@@ -57,13 +62,37 @@
         keyword:''
       }
     },
+    mounted() {
+      this.$bus.$on('clearKeyword',this.clearKeyword)
+    },
     methods: {
+      clearKeyword(){
+        this.keyword = ''
+      },
+
       toSearch(){
-       this.$router.push({
-          name:'search',
-        params:{keyword: this.keyword || undefined},
-        query:{keyword1: this.keyword.toUpperCase()}
-       })
+        let location = {
+           name:'search',
+          params:{keyword: this.keyword || undefined},
+        // query:{keyword1: this.keyword.toUpperCase()}
+        }
+        if(this.$route.query){
+          location.query = this.$route.query
+        }
+       if(this.$route.path !== '/home'){
+            this.$router.replace(location)
+          }else{
+             this.$router.push(location)
+          }
+      },
+      async logout(){
+        try {
+          await this.$store.dispatch('userLogout')
+          alert ('退出成功')
+          this.$router.push('/')
+        } catch (error) {
+          alert (error.message)
+        }
       }
     },
   }
