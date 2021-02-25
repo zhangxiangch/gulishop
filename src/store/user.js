@@ -1,12 +1,16 @@
 import {getUserTempId} from '@/utils/userabout'
-import {reqUserRegister,reqGetCode, reqUserLogin,reqGetUserInfo, reqUserLogout} from '@/api'
+import {reqUserRegister,reqGetCode, reqUserLogin,reqGetUserInfo, reqUserLogout,reqUserAddressList} from '@/api'
 const state ={
   userTempId:getUserTempId(),
   code:'',
   token:localStorage.getItem('TOKEN_KEY'),
-  userInfo:{}
+  userInfo:{},
+  userAddressList:[]
 }
 const mutations ={
+  RECEIVE_USERADDRESSLIST(state,userAddressList){
+    state.userAddressList = userAddressList
+  },
   RECEIVE_CODE(state,code){
     state.code = code
   },
@@ -80,6 +84,12 @@ const actions ={
       }else{
         return Promise.reject(new Error('failed'))
       }
+   },
+   async getUserAddressList({commit}){
+     const result = await reqUserAddressList()
+     if(result.code === 200){
+       commit('RECEIVE_USERADDRESSLIST',result.data)
+     }
    }
 
 

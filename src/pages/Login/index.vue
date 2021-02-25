@@ -81,7 +81,8 @@
          try {
           this.$store.dispatch('userLogin',{phone,password})
           alert('登录成功')
-          this.$router.push('/')
+          let targetPath = this.$route.query.redirect || '/'
+          this.$router.push(targetPath)
        } catch (error) {
           alert(error.message)
        }

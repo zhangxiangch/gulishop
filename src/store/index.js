@@ -7,6 +7,7 @@ import user from './user'
 import search from './search'
 import detail from './detail'
 import shopcart from './shopcart'
+import trade from './trade'
 
 const state = {
 
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     user,
     search,
     detail,
-    shopcart
+    shopcart,
+    trade
   }
 })

@@ -112,3 +112,58 @@ export const reqUserLogout = ()=>{
     method:'get'
   })
 }
+
+//请求获取用户地址
+// /api/user/userAddress/auth/findUserAddressList
+export const reqUserAddressList = () =>{
+  return request({
+    url:'/user/userAddress/auth/findUserAddressList',
+    method:'get'
+  })
+}
+
+//请求获取交易信息
+//api/order/auth/trade
+export const reqTradeInfo = () =>{
+  return request({
+    url:'/order/auth/trade',
+    method:'get'
+  })
+}
+
+// reqUserAddressList()
+// reqTradeInfo()
+// /api/order/auth/submitOrder?tradeNo={tradeNo}
+export const reqSubmitOrder = (tradeNo,tradeInfo) =>{
+  return request({
+    url:`/order/auth/submitOrder?tradeNo=${tradeNo}`,
+    method:'post',
+    data:tradeInfo
+  })
+}
+
+//获取支付信息
+///api/payment/weixin/createNative/{orderId}
+export const reqPayInfo = (orderId) =>{
+  return request({
+    url:`/payment/weixin/createNative/${orderId}`,
+    method:'get',
+  })
+}
+//获取支付状态
+// /api/payment/weixin/queryPayStatus/{orderId}
+export const reqPayStatus = (orderId) =>{
+  return request({
+    url:`/payment/weixin/queryPayStatus/${orderId}`,
+    method:'get',
+  })
+}
+
+///api/order/auth/{page}/{limit}
+//获取订单列表
+export const reqMyOrderInfo = (page,limit) =>{
+  return request({
+    url:`/order/auth/${page}/${limit}`,
+    method:'get'
+  })
+}
